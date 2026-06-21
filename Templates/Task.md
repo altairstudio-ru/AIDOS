@@ -1,52 +1,60 @@
-# Task
-
-## ID
-TASK-XXX
-
-## Title
-Short description of the task
+# TASK-{{ID}} — {{TITLE}}
 
 ---
 
-## Objective
-What must be achieved
+# Status
+todo | in_progress | done | blocked
 
 ---
 
-## Context
-Relevant system and project context
-
-- Project:
-- Related files:
-- Dependencies:
+# Workspace
+{{WORKSPACE}}
 
 ---
 
-## Assigned Role
-- Backend / Frontend / Research / QA / etc.
+# Description
+{{DESCRIPTION}}
 
 ---
 
-## Input
-What the role receives
+# Input
+User request or system trigger.
 
 ---
 
-## Expected Output
-What must be produced
-
-- files to create/update
-- knowledge updates
-- decisions (if needed)
+# Plan
+- Step 1
+- Step 2
+- Step 3
 
 ---
 
-## Constraints
-- Must follow AgentProtocol
-- Must comply with FileStandards
-- Must update Registry if dependencies change
+# Assigned Role
+Research | Backend | Frontend | QA | Executive
 
 ---
 
-## Status
-- Pending / In Progress / Completed / Failed
+# Dependencies
+- other tasks
+- decisions
+- knowledge entries
+
+---
+
+# Execution Log
+(append-only)
+
+---
+
+# Output
+Final result of task execution.
+
+---
+
+# Related Decisions
+- DEC-xxx
+
+---
+
+# Related Knowledge
+- KNW-xxx
