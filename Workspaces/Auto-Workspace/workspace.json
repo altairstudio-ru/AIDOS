@@ -1,0 +1,8 @@
+cat > Workspaces/Auto-Workspace/workspace.json << 'EOF'
+{
+  "name": "Auto-Workspace",
+  "status": "active",
+  "type": "default",
+  "description": "Fallback workspace for uncategorized tasks"
+}
+EOF

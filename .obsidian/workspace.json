@@ -1,0 +1,218 @@
+{
+  "main": {
+    "id": "7c140ba88f6146a1",
+    "type": "split",
+    "children": [
+      {
+        "id": "cf1b31a0f4956ab7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "82405f40f8031e9a",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Граф"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c013bb85b94244ed",
+    "type": "split",
+    "children": [
+      {
+        "id": "f3d021b67c272b90",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c24cc120db31b6e4",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Файловый менеджер"
+            }
+          },
+          {
+            "id": "066205eee20b34cb",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Поиск"
+            }
+          },
+          {
+            "id": "d76ac7e259cf62fe",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Закладки"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "6b506623936a8aa5",
+    "type": "split",
+    "children": [
+      {
+        "id": "33b0a6bf4e3f1e73",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "29073c9eca44e734",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Обратные ссылки"
+            }
+          },
+          {
+            "id": "74c48d141222b246",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Исходящие ссылки"
+            }
+          },
+          {
+            "id": "4380ecc088f9e2b5",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Теги"
+            }
+          },
+          {
+            "id": "ea70cf3699566fc9",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Все свойства"
+            }
+          },
+          {
+            "id": "810c40db0dbf583d",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Структура"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Меню быстрого перехода": false,
+      "graph:Граф": false,
+      "canvas:Создать новый холст": false,
+      "daily-notes:Сегодняшняя заметка": false,
+      "templates:Вставить шаблон": false,
+      "command-palette:Открыть палитру команд": false,
+      "bases:Создать новую базу": false
+    }
+  },
+  "active": "c24cc120db31b6e4",
+  "lastOpenFiles": [
+    "System/ProjectIntelligence/registry.py",
+    "System/ProjectIntelligence/ru.md",
+    "System/ProjectIntelligence/en.md",
+    "System/ProjectIntelligence",
+    "AI-Development-OS/System/ProjectIntelligence/registry.py",
+    "AI-Development-OS/System/ProjectIntelligence/ru.md",
+    "AI-Development-OS/System/ProjectIntelligence/en.md",
+    "AI-Development-OS/System/ProjectIntelligence",
+    "AI-Development-OS/System",
+    "AI-Development-OS",
+    "Projects/Suno-Downloader/Tasks/TASK-1782006199.md",
+    "Engine/AI-Development-OS/Projects/Suno-Downloader/Tasks/TASK-1782003584.md",
+    "Engine/AI-Development-OS/Projects/Suno-Downloader/Tasks",
+    "Engine/AI-Development-OS/Projects/Suno-Downloader",
+    "Engine/AI-Development-OS/Projects",
+    "Engine/AI-Development-OS",
+    "Engine/__pycache__/router.cpython-314.pyc",
+    "System/SCI/ru.md",
+    "System/SCI/en.md",
+    "System/LanguageLayer/ru.md",
+    "System/LanguageLayer/en.md",
+    "System/Bootstrap/ru.md",
+    "System/Bootstrap/en.md",
+    "System/TaskGenerator/ru.md",
+    "System/TaskGenerator/en.md",
+    "System/Router/ru.md",
+    "System/Router/en.md",
+    "Projects/Suno-Downloader/Tasks/TASK-002.md",
+    "Projects/Suno-Downloader/Decisions/DEC-001-SUNO-APPROACH.md",
+    "Projects/Suno-Downloader/Knowledge/SUNO-RESEARCH-001.md",
+    "Projects/Suno-Downloader/Tasks/TASK-001.md",
+    "Projects/Suno-Downloader/Progress.md",
+    "Projects/Suno-Downloader/Architecture.md",
+    "Projects/Suno-Downloader/Goal.md",
+    "Templates/AgentOutput.md",
+    "Templates/Report.md"
+  ]
+}

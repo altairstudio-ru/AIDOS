@@ -1,0 +1,9 @@
+{
+  "name": "Suno-Downloader",
+  "type": "software-project",
+  "status": "active",
+  "created_at": "2026-01-01",
+  "description": "Service for downloading SUNO AI tracks",
+  "intelligence_mode": "auto",
+  "default_role": "Research"
+}
