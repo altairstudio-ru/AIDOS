@@ -1,36 +1,22 @@
 import sys
-from Platform.Intelligence.project_intelligence import ProjectIntelligence
-from Platform.Runtime.ExecutionEngine import ExecutionEngine
-
-
-def run_idea(idea: str):
-    print("[AIDOS] START IDEA:", idea)
-
-    pi = ProjectIntelligence()
-
-    print("[AIDOS] Creating project...")
-
-    project = pi.create_project(idea)
-
-    print("[AIDOS] PROJECT CREATED:", project)
-
-    engine = ExecutionEngine()
-
-    print("[AIDOS] EXECUTING TASKS...")
-
-    for task_path in project.get("tasks", []):
-        print("[AIDOS] TASK:", task_path)
-        engine.execute_task(task_path)
-
-    print("[AIDOS] DONE")
+from Engine.executor import run_task
+from Engine.task_runner import run_all_tasks
 
 
 if __name__ == "__main__":
+    task = " ".join(sys.argv[1:])
+
+    if not task:
+        print("Usage: python3 Engine/run.py \"task\"")
+        exit(1)
+
     print("[AIDOS] BOOT")
 
-    if len(sys.argv) < 2:
-        print("[ERROR] No idea provided")
-        sys.exit(1)
+    # 🧠 1. planner + generation
+    run_task(task)
 
-    idea = sys.argv[1]
-    run_idea(idea)
+    # 🚀 2. AUTONOMOUS EXECUTION
+    print("\n[AIDOS] RUNNING TASKS...\n")
+    run_all_tasks("AIDOS/Projects/suno_downloader")
+
+    print("\n[AIDOS] DONE FULL CYCLE")
