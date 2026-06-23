@@ -1,35 +1,44 @@
-# Knowledge Entry
-
-## Title
-Concept name
+# KNOWLEDGE-{{ID}} — {{TITLE}}
 
 ---
 
-## Summary
-Short explanation
+# Type
+system | architecture | execution | debugging | optimization
 
 ---
 
-## Details
-Full structured knowledge
+# Source
+- task(s)
+- decision(s)
+- experiment(s)
 
 ---
 
-## Use Cases
-- Where it is used
+# Knowledge Statement
+Core insight in one or more sentences.
 
 ---
 
-## Related Concepts
-- [[...]]
-- [[...]]
+# Explanation
+Why this is true / observed behavior.
 
 ---
 
-## Source
-- Project / Research / Decision
+# Context
+Where this knowledge applies.
 
 ---
 
-## Validated
-Yes / No
+# Impact
+How this changes system design or behavior.
+
+---
+
+# Related
+- TASK-xxx
+- DEC-xxx
+
+---
+
+# Reusability
+high | medium | low
