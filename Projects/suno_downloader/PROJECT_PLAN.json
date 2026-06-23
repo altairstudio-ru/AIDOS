@@ -1,0 +1,17 @@
+{
+  "goal": "Suno Downloader",
+  "modules": [
+    "requirements_analysis",
+    "architecture_design",
+    "backend_downloader",
+    "api_layer",
+    "testing",
+    "documentation"
+  ],
+  "agents": [
+    "Research",
+    "Executive",
+    "Backend",
+    "QA"
+  ]
+}

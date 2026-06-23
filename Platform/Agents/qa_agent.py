@@ -43,8 +43,7 @@ class QAAgent(BaseAgent):
             response["warnings"].append("Task still contains TODO state")
 
         if "fix" in text:
-            response["warnings"].append("Fix-related task detected, verify
-resolution")
+            response["warnings"].append("Fix-related task detected, verify logic")
 
         # ----------------------------
         # ПРОВЕРКА СТРУКТУРЫ

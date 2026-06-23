@@ -35,3 +35,5 @@ flux_outputs/
 # Logs
 logs/
 *.log
+
+.directory/
