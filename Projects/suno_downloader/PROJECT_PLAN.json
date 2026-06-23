@@ -1,17 +1,36 @@
 {
-  "goal": "Suno Downloader",
+  "goal": "Develop a Suno AI-generated music downloader tool that allows users to download and organize generated audio tracks locally or via cloud storage.",
   "modules": [
-    "requirements_analysis",
-    "architecture_design",
-    "backend_downloader",
-    "api_layer",
-    "testing",
-    "documentation"
+    {
+      "name": "Audio Generation Interface",
+      "description": "Provides UI for inputting prompts, selecting styles/models, adjusting parameters (length, genre), and initiating track generation using Suno API.",
+      "owner_agent": "Frontend"
+    },
+    {
+      "name": "Download & Export Module",
+      "description": "Handles downloading generated audio files from the backend service or direct URL links; supports formats like MP3/WAV with metadata preservation.",
+      "owner_agent": "Backend"
+    },
+    {
+      "name": "File Organizer",
+      "description": "Automatically categorizes downloaded tracks by date, genre/style, prompt hash, and user preferences using a local file system or cloud folder structure.",
+      "owner_agent": "Backend"
+    },
+    {
+      "name": "Authentication & User Management",
+      "description": "Manages login via OAuth (e.g., Google), stores download history per user securely in database with optional subscription tier support.",
+      "owner_agent": "Backend"
+    },
+    {
+      "name": "Suno API Wrapper Service",
+      "description": "Encapsulates Suno's public or internal API for stable, rate-limited access; includes error handling and retry logic for generation requests.",
+      "owner_agent": "Backend"
+    },
+    {
+      "name": "Quality Assurance & Testing Suite",
+      "description": "Validates download integrity (file size/type), checks organization accuracy, and tests edge cases like failed downloads or network timeouts.",
+      "owner_agent": "QA"
+    }
   ],
-  "agents": [
-    "Research",
-    "Executive",
-    "Backend",
-    "QA"
-  ]
+  "execution_strategy": "sequential"
 }

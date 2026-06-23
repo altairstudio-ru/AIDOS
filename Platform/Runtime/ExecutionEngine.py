@@ -1,126 +1,122 @@
-import datetime
-
 from Platform.Agents.registry import get_agent
-from Platform.Intelligence.router import route_task
 
 
-# ----------------------------
-# СТАТУС ЗАДАЧИ
-# ----------------------------
-
-def update_task_status(task_path, status):
+class ExecutionEngine:
     """
-    Обновляет статус задачи в markdown файле
+    ExecutionEngine v0.7
+
+    Отвечает за выполнение задач через агентов
+    с поддержкой LLM-структурированных планов.
     """
 
-    with open(task_path, "r", encoding="utf-8") as f:
-        lines = f.readlines()
+    def __init__(self):
+        self.registry = get_agent
 
-    new_lines = []
-    status_written = False
+    # ----------------------------
+    # MAIN ENTRY
+    # ----------------------------
 
-    for line in lines:
-        if line.strip().lower().startswith("# status"):
-            new_lines.append(line)
-            new_lines.append(f"{status}\n")
-            status_written = True
-        else:
-            new_lines.append(line)
+    def execute_task(self, task_path: str, context=None):
+        """
+        Выполняет одну задачу из файла
+        """
 
-    if not status_written:
-        new_lines.insert(0, f"# Status\n{status}\n\n")
+        task = self._load_task(task_path)
 
-    with open(task_path, "w", encoding="utf-8") as f:
-        f.writelines(new_lines)
+        # 1. Router → выбирает агента
+        route = self._route(task)
 
+        agent_name = route["agent"]
+        agent = self.registry(agent_name)
 
-# ----------------------------
-# ЛОГИ
-# ----------------------------
+        # 2. Executive step (если нужен LLM план)
+        execution_plan = None
 
-def append_log(task_path, message):
-    """
-    Пишет лог прямо в файл задачи
-    """
+        if hasattr(agent, "execute"):
+            execution_plan = agent.execute(
+                {
+                    "task": task,
+                    "context": context,
+                    "route": route
+                }
+            )
 
-    timestamp = datetime.datetime.now().isoformat()
+        # 3. fallback execution
+        result = self._run_agent(agent, task, execution_plan)
 
-    with open(task_path, "a", encoding="utf-8") as f:
-        f.write(f"\n\n---\n# LOG [{timestamp}]\n{message}\n")
+        # 4. save result back to task
+        self._save_result(task_path, result)
 
+        return result
 
-# ----------------------------
-# EXECUTION ENGINE v2
-# ----------------------------
+    # ----------------------------
+    # ROUTING
+    # ----------------------------
 
-def execute_task(task_path):
-    """
-    Полный pipeline:
+    def _route(self, task: dict):
+        """
+        Простая маршрутизация задач
+        """
 
-    Task → Router → Executive → Agents → Result
-    """
+        content = task.get("content", "").lower()
 
-    # 1. старт
-    update_task_status(task_path, "in_progress")
-    append_log(task_path, "Task started")
+        if "frontend" in content:
+            return {"agent": "Frontend"}
 
-    # 2. читаем задачу
-    with open(task_path, "r", encoding="utf-8") as f:
-        task_content = f.read()
+        if "backend" in content:
+            return {"agent": "Backend"}
 
-    # 3. ROUTER
-    routing = route_task(task_content)
+        if "test" in content or "qa" in content:
+            return {"agent": "QA"}
 
-    primary_agent = routing["agent"]
-    task_type = routing["task_type"]
-    knowledge = routing["knowledge_context"]
+        # default
+        return {"agent": "Executive"}
 
-    append_log(task_path, f"Router selected: {primary_agent} ({task_type})")
+    # ----------------------------
+    # AGENT EXECUTION
+    # ----------------------------
 
-    task = {
-        "path": task_path,
-        "title": task_path.split("/")[-1],
-        "content": task_content,
-        "type": task_type,
-        "knowledge": knowledge
-    }
+    def _run_agent(self, agent, task, execution_plan):
+        """
+        Запуск агента
+        """
 
-    # 4. EXECUTIVE LAYER (НОВОЕ)
-    executive = get_agent("Executive")
-    plan = executive.execute(task, context=None)
+        if hasattr(agent, "run"):
+            return agent.run(task, execution_plan)
 
-    append_log(task_path, f"Executive plan created: {plan['steps']}")
+        return {
+            "status": "executed",
+            "agent": agent.__class__.__name__,
+            "task": task,
+            "plan": execution_plan
+        }
 
-    results = []
+    # ----------------------------
+    # TASK LOADING
+    # ----------------------------
 
-    # 5. EXECUTION PIPELINE ПО ШАГАМ
-    for agent_name in plan["recommended_agents"]:
+    def _load_task(self, path: str):
+        """
+        Загружает markdown задачу
+        """
 
-        agent = get_agent(agent_name)
-        append_log(task_path, f"Running agent: {agent.name}")
+        with open(path, "r", encoding="utf-8") as f:
+            content = f.read()
 
-        try:
-            result = agent.execute(task, context=plan)
-            results.append({
-                "agent": agent.name,
-                "result": result
-            })
+        return {
+            "path": path,
+            "content": content
+        }
 
-            append_log(task_path, f"{agent.name} result: {result}")
+    # ----------------------------
+    # SAVE RESULT
+    # ----------------------------
 
-        except Exception as e:
-            error_msg = f"{agent.name} failed: {str(e)}"
-            append_log(task_path, error_msg)
-            results.append({
-                "agent": agent.name,
-                "error": error_msg
-            })
+    def _save_result(self, path: str, result: dict):
+        """
+        Записывает результат обратно в task файл
+        """
 
-    # 6. финализация
-    update_task_status(task_path, "done")
-    append_log(task_path, "Execution completed")
-
-    return {
-        "plan": plan,
-        "results": results
-    }
+        with open(path, "a", encoding="utf-8") as f:
+            f.write("\n\n--- RESULT ---\n")
+            f.write(str(result))

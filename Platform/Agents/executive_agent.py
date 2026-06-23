@@ -1,93 +1,44 @@
-from Platform.Agents.base_agent import BaseAgent
+from Platform.Intelligence.llm import LLM
 
 
-class ExecutiveAgent(BaseAgent):
+class ExecutiveAgent:
     """
-    Executive Agent (оркестратор уровня задач):
-
-    НЕ выполняет задачи напрямую.
-    Он:
-    - разбивает задачу на шаги
-    - определяет порядок выполнения
-    - может назначать роли другим агентам
+    LLM-управляемый архитектор выполнения
     """
 
     def __init__(self):
-        super().__init__("Executive")
+        self.llm = LLM()
 
-    def execute(self, task: dict, context=None):
-        """
-        Планирование выполнения задачи.
-        """
+    def execute(self, task, context=None):
+        prompt = f"""
+You are Executive Agent in AI system AIDOS.
 
-        content = task.get("content", "")
-        knowledge = task.get("knowledge", [])
-        task_type = task.get("type", "design")
+You are responsible for execution strategy.
 
-        text = content.lower()
+PROJECT:
+{task["content"]}
 
-        plan = {
-            "agent": self.name,
-            "task_type": task_type,
-            "summary": "Execution plan generated",
-            "steps": [],
-            "recommended_agents": [],
-            "knowledge": knowledge
-        }
+CONTEXT PLAN:
+{context}
 
-        # ----------------------------
-        # РАЗБОР ЗАДАЧИ НА ЭТАПЫ
-        # ----------------------------
+Return JSON ONLY:
+{{
+  "steps": ["..."],
+  "recommended_agents": ["Backend", "Frontend", "QA"],
+  "execution_mode": "sequential | parallel",
+  "risks": ["..."]
+}}
+"""
 
-        if "suno" in text or "downloader" in text:
-            plan["steps"].append("Analyze requirements")
-            plan["steps"].append("Design architecture")
-            plan["steps"].append("Implement core logic")
-            plan["steps"].append("Add UI/API layer")
-            plan["steps"].append("Test system")
+        raw = self.llm.generate(prompt)
 
-            plan["recommended_agents"] = [
-                "Research",
-                "Backend",
-                "Frontend",
-                "QA"
-            ]
+        return self._safe_parse(raw)
 
-        elif "api" in text:
-            plan["steps"].append("Define API schema")
-            plan["steps"].append("Implement endpoints")
-            plan["steps"].append("Add validation")
-            plan["steps"].append("Test endpoints")
-
-            plan["recommended_agents"] = [
-                "Backend",
-                "QA"
-            ]
-
-        elif "ui" in text:
-            plan["steps"].append("Design UI structure")
-            plan["steps"].append("Build components")
-            plan["steps"].append("Integrate API")
-            plan["steps"].append("Test UI")
-
-            plan["recommended_agents"] = [
-                "Frontend",
-                "QA"
-            ]
-
-        else:
-            plan["steps"].append("Analyze task")
-            plan["steps"].append("Select approach")
-            plan["steps"].append("Execute implementation")
-            plan["steps"].append("Validate result")
-
-            plan["recommended_agents"] = [
-                "Research",
-                "QA"
-            ]
-
-        # ----------------------------
-        # ИТОГ
-        # ----------------------------
-
-        return plan
+    def _safe_parse(self, text: str):
+        try:
+            import json
+            return json.loads(text)
+        except:
+            start = text.find("{")
+            end = text.rfind("}")
+            return json.loads(text[start:end+1])

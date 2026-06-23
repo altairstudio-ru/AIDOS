@@ -1,52 +1,35 @@
 import sys
-
 from Platform.Intelligence.project_intelligence import ProjectIntelligence
-from Platform.Runtime.ExecutionEngine import execute_task
+from Platform.Runtime.ExecutionEngine import ExecutionEngine
 
 
 def run_idea(idea: str):
-    """
-    Главная точка входа:
+    print("[AIDOS] START IDEA:", idea)
 
-    IDEA → PROJECT → TASKS → EXECUTION
-    """
-
-    print(f"[AIDOS] Starting project creation: {idea}")
-
-    # 1. создаём проект
     pi = ProjectIntelligence()
+
+    print("[AIDOS] Creating project...")
+
     project = pi.create_project(idea)
 
-    print(f"[AIDOS] Project created: {project['project']}")
-    print(f"[AIDOS] Tasks generated: {len(project['tasks'])}")
+    print("[AIDOS] PROJECT CREATED:", project)
 
-    results = []
+    engine = ExecutionEngine()
 
-    # 2. автоматически запускаем все задачи
-    for task_path in project["tasks"]:
-        print(f"[AIDOS] Executing task: {task_path}")
+    print("[AIDOS] EXECUTING TASKS...")
 
-        result = execute_task(task_path)
-        results.append({
-            "task": task_path,
-            "result": result
-        })
+    for task_path in project.get("tasks", []):
+        print("[AIDOS] TASK:", task_path)
+        engine.execute_task(task_path)
 
-    print("[AIDOS] All tasks completed")
+    print("[AIDOS] DONE")
 
-    return {
-        "project": project,
-        "results": results
-    }
-
-
-# ----------------------------
-# CLI ENTRY
-# ----------------------------
 
 if __name__ == "__main__":
+    print("[AIDOS] BOOT")
+
     if len(sys.argv) < 2:
-        print("Usage: python3 run.py 'Your idea here'")
+        print("[ERROR] No idea provided")
         sys.exit(1)
 
     idea = sys.argv[1]
