@@ -1,17 +1,13 @@
-import os
 from datetime import datetime
+from Engine.config import tasks_path
 
 
-def ensure_dir(path):
-    os.makedirs(path, exist_ok=True)
-
-
-def create_task(project_path, idx, title, desc, agent="coder"):
-    tasks_dir = f"{project_path}/Tasks"
-    ensure_dir(tasks_dir)
+def create_task(project_name, idx, title, desc, agent="coder"):
+    base = tasks_path(project_name)
+    base.mkdir(parents=True, exist_ok=True)
 
     task_id = f"TASK-{idx:03d}"
-    path = f"{tasks_dir}/{task_id}.md"
+    path = base / f"{task_id}.md"
 
     content = f"""# {task_id}
 
@@ -31,17 +27,11 @@ TODO
 {datetime.now().isoformat()}
 """
 
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(content)
-
-    return path
+    path.write_text(content, encoding="utf-8")
+    return str(path)
 
 
-def generate_tasks(project_path, plan_text):
-    """
-    простой стабильный парсер без LLM
-    """
-
+def generate_tasks(project_name, plan_text):
     mapping = [
         ("Download Service", "Implement file download logic"),
         ("Storage Manager", "Implement file storage system"),
@@ -51,10 +41,9 @@ def generate_tasks(project_path, plan_text):
         ("QA System", "Testing and validation")
     ]
 
-    created = []
+    result = []
 
     for i, (title, desc) in enumerate(mapping, 1):
-        path = create_task(project_path, i, title, desc)
-        created.append(path)
+        result.append(create_task(project_name, i, title, desc))
 
-    return created
+    return result

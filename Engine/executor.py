@@ -5,6 +5,7 @@ from Engine.role_router import detect_role
 from Engine.model_map import MODEL_MAP
 from Engine.storage import save_log
 from Engine.task_generator import generate_tasks
+from Engine.config import project_path
 
 
 URL = "http://localhost:11434/api/generate"
@@ -30,7 +31,7 @@ def call_model(model, prompt):
     }
 
 
-def run_task(task_text: str, project_path="AIDOS/Projects/suno_downloader"):
+def run_task(task_text: str, project_name="suno_downloader"):
     role = detect_role(task_text)
     model = MODEL_MAP[role]
 
@@ -41,9 +42,8 @@ def run_task(task_text: str, project_path="AIDOS/Projects/suno_downloader"):
     result = call_model(model, task_text)
     output = result["text"]
 
-    # 💾 лог
     log_path = save_log(
-        project_path,
+        project_name,
         role,
         model,
         task_text,
@@ -54,9 +54,9 @@ def run_task(task_text: str, project_path="AIDOS/Projects/suno_downloader"):
     print(output)
     print(f"\n📦 LOG: {log_path}")
 
-    # 🧠 если planner → генерим задачи
+    # если planner → генерим задачи
     if role == "planner":
-        tasks = generate_tasks(project_path, output)
+        tasks = generate_tasks(project_name, output)
 
         print("\n📦 TASKS GENERATED:")
         for t in tasks:
